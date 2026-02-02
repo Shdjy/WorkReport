@@ -10,7 +10,7 @@
 // 添加要在此处预编译的标头
 #include "framework.h"
 
-
+#include <windows.h>
 #include <curl/curl.h>
 #include <iostream>
 #include "LoggerMacros.h"
@@ -19,7 +19,12 @@
 #include <unordered_map>
 #include <string>
 #include "json.hpp"
+#include "TemplateManager.h"
+
 
 using json = nlohmann::json;
+
+
+
 
 #endif //PCH_H

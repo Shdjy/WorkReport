@@ -1,5 +1,9 @@
 #include "pch.h"
 #include "TemplateManager.h"
+#include <fstream>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 bool TemplateManager::Load(const std::string& filePath)
 {
@@ -12,16 +16,8 @@ bool TemplateManager::Load(const std::string& filePath)
 	json j;
 	ifs >> j;
 
-	m_templates.clear();
-
-	for (auto it = j.begin(); it != j.end(); ++it)
-	{
-		ReportTemplate tpl;
-		tpl.Title = it.value().value("Title", "");
-		tpl.Body = it.value().value("Body", "");
-
-		m_templates.emplace(it.key(), tpl);
-	}
+	m_template.Title = j.value("Title", "");
+	m_template.Body = j.value("Body", "");
 
 	return true;
 }
@@ -29,12 +25,8 @@ bool TemplateManager::Load(const std::string& filePath)
 bool TemplateManager::Save(const std::string& filePath) const
 {
 	json j;
-
-	for (const auto& kv : m_templates)
-	{
-		j[kv.first]["Title"] = kv.second.Title;
-		j[kv.first]["Body"] = kv.second.Body;
-	}
+	j["Title"] = m_template.Title;
+	j["Body"] = m_template.Body;
 
 	std::ofstream ofs(filePath, std::ios::trunc);
 	if (!ofs.is_open())
@@ -46,19 +38,12 @@ bool TemplateManager::Save(const std::string& filePath) const
 	return true;
 }
 
-void TemplateManager::SetTemplate(const std::string& key, const ReportTemplate& tpl)
+ReportTemplate TemplateManager::GetTemplate() const
 {
-	m_templates[key] = tpl;
+	return m_template;
 }
 
-bool TemplateManager::GetTemplate(const std::string& key, ReportTemplate& out) const
+void TemplateManager::SetTemplate(const ReportTemplate& tpl)
 {
-	auto it = m_templates.find(key);
-	if (it == m_templates.end())
-	{
-		return false;
-	}
-
-	out = it->second;
-	return true;
+	m_template = tpl;
 }

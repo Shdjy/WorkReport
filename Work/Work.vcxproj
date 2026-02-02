@@ -98,7 +98,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>D:\code for github\Work\x64\Debug;D:\C++library\curl-8.18.0_2-win64-mingw\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\code for github\WorkReport\x64\Debug;D:\C++library\curl-8.18.0_2-win64-mingw\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl-d_imp.lib;Clog.lib</AdditionalDependencies>
     </Link>
     <Midl>

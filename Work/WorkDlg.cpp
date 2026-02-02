@@ -19,6 +19,8 @@
 
 CWorkDlg::CWorkDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_WORK_DIALOG, pParent)
+	, m_reportTitle(_T(""))
+	, m_reportBody(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -26,12 +28,16 @@ CWorkDlg::CWorkDlg(CWnd* pParent /*=nullptr*/)
 void CWorkDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT1, m_reportTitle);
+	DDX_Text(pDX, IDC_EDIT2, m_reportBody);
 }
 
 BEGIN_MESSAGE_MAP(CWorkDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CWorkDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CWorkDlg::OnBnClickedButton2)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -47,6 +53,9 @@ BOOL CWorkDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	m_appPath = GetExeFullPath();
+	//创建背景画刷
+	m_bkBrush.CreateSolidBrush(RGB(255, 192, 203)); // 标准粉色
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -106,4 +115,114 @@ void CWorkDlg::OnBnClickedButton1()
 	}
 
 	curl_global_cleanup();
+}
+
+
+std::string CWorkDlg::CStringToString(const CString& str)
+{
+	//return std::string(str.GetString());
+	CStringW wide(str);
+
+	int len = WideCharToMultiByte(
+		CP_UTF8,
+		0,
+		wide,
+		-1,
+		nullptr,
+		0,
+		nullptr,
+		nullptr);
+
+	std::string utf8(len - 1, '\0');
+
+	WideCharToMultiByte(
+		CP_UTF8,
+		0,
+		wide,
+		-1,
+		&utf8[0],
+		len,
+		nullptr,
+		nullptr);
+
+	return utf8;
+
+}
+
+CString CWorkDlg::StringToCString(const std::string& str)
+{
+	//return CString(str.c_str());
+	if (str.empty())
+	{
+		return CString();
+	}
+
+	int wideLen = MultiByteToWideChar(
+		CP_UTF8,
+		0,
+		str.c_str(),
+		-1,
+		nullptr,
+		0);
+
+	if (wideLen <= 0)
+	{
+		return CString();
+	}
+
+	CStringW wideStr;
+	wchar_t* buffer = wideStr.GetBuffer(wideLen);
+
+	MultiByteToWideChar(
+		CP_UTF8,
+		0,
+		str.c_str(),
+		-1,
+		buffer,
+		wideLen);
+
+	wideStr.ReleaseBuffer();
+
+	// 如果工程是 MBCS，这里会自动转成 CStringA
+	return CString(wideStr);
+}
+
+std::string CWorkDlg::GetExeFullPath()
+{
+	char path[MAX_PATH] = { 0 };
+	GetModuleFileNameA(nullptr, path, MAX_PATH);
+	return std::string(path);
+}
+
+void CWorkDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+	m_reportTemplate.Title = CStringToString(m_reportTitle);
+	m_reportTemplate.Body = CStringToString(m_reportBody);
+
+	m_templateManager.SetTemplate(m_reportTemplate);
+	std::string path = m_appPath + "\\..\\Template\\DilyReport.json";
+	m_templateManager.Save(path);
+}
+
+
+HBRUSH CWorkDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  在此更改 DC 的任何特性
+	if (nCtlColor == CTLCOLOR_DLG)
+	{
+		return (HBRUSH)m_bkBrush;
+	}
+	if (nCtlColor == CTLCOLOR_STATIC)
+	{
+		pDC->SetBkMode(TRANSPARENT);           // 背景透明
+		pDC->SetTextColor(RGB(0, 0, 0));        // 文字颜色（可选）
+		return (HBRUSH)GetStockObject(NULL_BRUSH);
+	}
+
+	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
+	return hbr;
 }

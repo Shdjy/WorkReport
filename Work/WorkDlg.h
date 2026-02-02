@@ -32,4 +32,24 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButton1();
+	CString m_reportTitle;
+	CString m_reportBody;
+
+	static std::string CStringToString(const CString& str);
+	static CString StringToCString(const std::string& str);
+
+private: 
+	std::string GetExeFullPath();
+
+
+	CBrush m_bkBrush;
+
+	ReportTemplate m_reportTemplate;
+	TemplateManager m_templateManager;
+
+	std::string m_appPath;
+
+public:
+	afx_msg void OnBnClickedButton2();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
