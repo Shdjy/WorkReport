@@ -63,6 +63,9 @@ BOOL CWorkApp::InitInstance()
 	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
 
 	Logger::Instance().Init("work", "./logs", LogLevel::Debug);
+	//LOG_SETSINK((Sink)1);
+	LOG_SETLEVEL((LogLevel)1);
+
 
 	// 标准初始化
 	// 如果未使用这些功能并希望减小

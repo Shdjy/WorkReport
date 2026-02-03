@@ -6,6 +6,12 @@ struct ReportTemplate
 	std::string Body;
 };
 
+struct DateInfo
+{
+	std::string cn;   // 2026Äê1ÔÂ1ÈÕ
+	std::string dot;  // 2026.1.1
+};
+
 class TemplateManager
 {
 public:
@@ -14,6 +20,8 @@ public:
 
 	void SetTemplate(const ReportTemplate& tpl);
 	ReportTemplate GetTemplate() const;
+	DateInfo GetTodayDate();
+	void ReplaceAll(std::string& text, const std::string& from, const std::string& to);
 
 private:
 	ReportTemplate m_template;

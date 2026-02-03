@@ -40,6 +40,7 @@ public:
 
 private: 
 	std::string GetExeFullPath();
+	void LoadTemplateManager();
 
 
 	CBrush m_bkBrush;

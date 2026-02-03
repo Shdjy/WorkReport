@@ -11,6 +11,7 @@
 #include "framework.h"
 
 #include <windows.h>
+#include <regex>
 #include <curl/curl.h>
 #include <iostream>
 #include "LoggerMacros.h"

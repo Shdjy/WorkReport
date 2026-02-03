@@ -56,6 +56,8 @@ BOOL CWorkDlg::OnInitDialog()
 	m_appPath = GetExeFullPath();
 	//创建背景画刷
 	m_bkBrush.CreateSolidBrush(RGB(255, 192, 203)); // 标准粉色
+	//加载模板
+	LoadTemplateManager();
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -151,7 +153,38 @@ std::string CWorkDlg::CStringToString(const CString& str)
 
 CString CWorkDlg::StringToCString(const std::string& str)
 {
-	//return CString(str.c_str());
+	//if (str.empty())
+	//{
+	//	return CString();
+	//}
+
+	//int wideLen = MultiByteToWideChar(
+	//	CP_UTF8,
+	//	0,
+	//	str.c_str(),
+	//	-1,
+	//	nullptr,
+	//	0);
+
+	//if (wideLen <= 0)
+	//{
+	//	return CString();
+	//}
+
+	//CString result;
+	//wchar_t* buffer = result.GetBuffer(wideLen - 1);
+
+	//MultiByteToWideChar(
+	//	CP_UTF8,
+	//	0,
+	//	str.c_str(),
+	//	-1,
+	//	buffer,
+	//	wideLen);
+
+	//result.ReleaseBuffer();
+	//return result;
+
 	if (str.empty())
 	{
 		return CString();
@@ -187,11 +220,24 @@ CString CWorkDlg::StringToCString(const std::string& str)
 	return CString(wideStr);
 }
 
+
 std::string CWorkDlg::GetExeFullPath()
 {
 	char path[MAX_PATH] = { 0 };
 	GetModuleFileNameA(nullptr, path, MAX_PATH);
 	return std::string(path);
+}
+
+void CWorkDlg::LoadTemplateManager()
+{
+	std::string path = m_appPath + "\\..\\Template\\DilyReport.json";
+	if (m_templateManager.Load(path))
+	{
+		m_reportTemplate = m_templateManager.GetTemplate();
+		m_reportTitle = StringToCString(m_reportTemplate.Title);
+		m_reportBody = StringToCString(m_reportTemplate.Body);
+		UpdateData(FALSE);
+	}
 }
 
 void CWorkDlg::OnBnClickedButton2()
@@ -206,6 +252,7 @@ void CWorkDlg::OnBnClickedButton2()
 	m_templateManager.Save(path);
 }
 
+//
 
 HBRUSH CWorkDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
@@ -220,6 +267,12 @@ HBRUSH CWorkDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	{
 		pDC->SetBkMode(TRANSPARENT);           // 背景透明
 		pDC->SetTextColor(RGB(0, 0, 0));        // 文字颜色（可选）
+		return (HBRUSH)GetStockObject(NULL_BRUSH);
+	}
+	if (nCtlColor == CTLCOLOR_BTN)
+	{
+		pDC->SetBkMode(TRANSPARENT);           // 背景透明
+		pDC->SetTextColor(RGB(100, 100, 100));        // 文字颜色（可选）
 		return (HBRUSH)GetStockObject(NULL_BRUSH);
 	}
 
