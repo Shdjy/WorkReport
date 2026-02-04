@@ -36,11 +36,6 @@ bool TemplateManager::Load(const std::string& filePath)
 	m_template.Title = j.value("Title", "");
 	m_template.Body = j.value("Body", "");
 
-	DateInfo date = GetTodayDate();
-
-	ReplaceAll(m_template.Title, "{DATE_CN}", date.cn);
-	ReplaceAll(m_template.Body, "{DATE_DOT}", date.dot);
-
 	return true;
 }
 
@@ -64,6 +59,17 @@ bool TemplateManager::Save(const std::string& filePath) const
 ReportTemplate TemplateManager::GetTemplate() const
 {
 	return m_template;
+}
+
+ReportTemplate TemplateManager::GetTodayTemplate()
+{
+	ReportTemplate temp = m_template;
+	DateInfo date = GetTodayDate();
+
+	ReplaceAll(temp.Title, "{DATE_CN}", date.cn);
+	ReplaceAll(temp.Body, "{DATE_DOT}", date.dot);
+
+	return temp;
 }
 
 DateInfo TemplateManager::GetTodayDate()

@@ -38,6 +38,9 @@ BEGIN_MESSAGE_MAP(CWorkDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CWorkDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CWorkDlg::OnBnClickedButton2)
 	ON_WM_CTLCOLOR()
+	ON_COMMAND(ID_MENULOADAY, &CWorkDlg::OnMenuloaday)
+	ON_COMMAND(ID_MENUSETDAY, &CWorkDlg::OnMenusetday)
+	ON_COMMAND(ID_MENUTODAY, &CWorkDlg::OnMenutoday)
 END_MESSAGE_MAP()
 
 
@@ -53,6 +56,9 @@ BOOL CWorkDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	//加载菜单栏
+	m_menu.LoadMenu(IDR_MENU1);
+	this->SetMenu(&m_menu);
 	m_appPath = GetExeFullPath();
 	//创建背景画刷
 	m_bkBrush.CreateSolidBrush(RGB(255, 192, 203)); // 标准粉色
@@ -230,10 +236,10 @@ std::string CWorkDlg::GetExeFullPath()
 
 void CWorkDlg::LoadTemplateManager()
 {
-	std::string path = m_appPath + "\\..\\Template\\DilyReport.json";
+	std::string path = m_appPath + DILYREPORTPATH;
 	if (m_templateManager.Load(path))
 	{
-		m_reportTemplate = m_templateManager.GetTemplate();
+		m_reportTemplate = m_templateManager.GetTodayTemplate();
 		m_reportTitle = StringToCString(m_reportTemplate.Title);
 		m_reportBody = StringToCString(m_reportTemplate.Body);
 		UpdateData(FALSE);
@@ -248,7 +254,7 @@ void CWorkDlg::OnBnClickedButton2()
 	m_reportTemplate.Body = CStringToString(m_reportBody);
 
 	m_templateManager.SetTemplate(m_reportTemplate);
-	std::string path = m_appPath + "\\..\\Template\\DilyReport.json";
+	std::string path = m_appPath + DILYREPORTPATH;
 	m_templateManager.Save(path);
 }
 
@@ -278,4 +284,32 @@ HBRUSH CWorkDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
 	return hbr;
+}
+
+
+void CWorkDlg::OnMenuloaday()
+{
+	// TODO: 在此添加命令处理程序代码
+	std::string path = m_appPath + DILYREPORTPATH;
+	if (m_templateManager.Load(path))
+	{
+		m_reportTemplate = m_templateManager.GetTemplate();
+		m_reportTitle = StringToCString(m_reportTemplate.Title);
+		m_reportBody = StringToCString(m_reportTemplate.Body);
+		UpdateData(FALSE);
+	}
+}
+
+
+void CWorkDlg::OnMenusetday()
+{
+	// TODO: 在此添加命令处理程序代码
+	OnBnClickedButton2();
+}
+
+
+void CWorkDlg::OnMenutoday()
+{
+	// TODO: 在此添加命令处理程序代码
+	LoadTemplateManager();
 }

@@ -4,7 +4,7 @@
 
 #pragma once
 
-
+#define  DILYREPORTPATH "\\..\\Template\\DilyReport.json"
 // CWorkDlg 对话框
 class CWorkDlg : public CDialogEx
 {
@@ -44,6 +44,7 @@ private:
 
 
 	CBrush m_bkBrush;
+	CMenu m_menu;
 
 	ReportTemplate m_reportTemplate;
 	TemplateManager m_templateManager;
@@ -53,4 +54,7 @@ private:
 public:
 	afx_msg void OnBnClickedButton2();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnMenuloaday();
+	afx_msg void OnMenusetday();
+	afx_msg void OnMenutoday();
 };
