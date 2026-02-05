@@ -19,6 +19,7 @@ BEGIN_MESSAGE_MAP(CWorkApp, CWinApp)
 END_MESSAGE_MAP()
 
 
+std::string CWorkApp::m_appPath = "";
 // CWorkApp 构造
 
 CWorkApp::CWorkApp()
@@ -61,10 +62,9 @@ BOOL CWorkApp::InitInstance()
 
 	// 激活“Windows Native”视觉管理器，以便在 MFC 控件中启用主题
 	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
-
-	Logger::Instance().Init("work", "./logs", LogLevel::Debug);
+	m_appPath = GetExeFullPath();
+	Logger::Instance().Init("work", m_appPath +"\\..\\logs", LogLevel::Debug);
 	//LOG_SETSINK((Sink)1);
-	LOG_SETLEVEL((LogLevel)1);
 
 
 	// 标准初始化
@@ -108,5 +108,12 @@ BOOL CWorkApp::InitInstance()
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
 	//  而不是启动应用程序的消息泵。
 	return FALSE;
+}
+
+std::string CWorkApp::GetExeFullPath()
+{
+	char path[MAX_PATH] = { 0 };
+	GetModuleFileNameA(nullptr, path, MAX_PATH);
+	return std::string(path);
 }
 

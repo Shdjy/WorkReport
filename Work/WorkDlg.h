@@ -4,7 +4,7 @@
 
 #pragma once
 
-#define  DILYREPORTPATH "\\..\\Template\\DilyReport.json"
+
 // CWorkDlg 对话框
 class CWorkDlg : public CDialogEx
 {
@@ -39,22 +39,25 @@ public:
 	static CString StringToCString(const std::string& str);
 
 private: 
-	std::string GetExeFullPath();
+
 	void LoadTemplateManager();
 
 
 	CBrush m_bkBrush;
 	CMenu m_menu;
 
-	ReportTemplate m_reportTemplate;
+	//ReportTemplate m_reportTemplate;
 	TemplateManager m_templateManager;
 
-	std::string m_appPath;
+	std::unique_ptr<ReportBase> m_reportT;
+
 
 public:
 	afx_msg void OnBnClickedButton2();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg void OnMenuloaday();
+	afx_msg void OnMenuToaday();
 	afx_msg void OnMenusetday();
 	afx_msg void OnMenutoday();
+	afx_msg void OnMenuweek();
+	afx_msg void OnMenumonth();
 };

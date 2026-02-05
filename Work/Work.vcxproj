@@ -190,6 +190,7 @@
     <ClInclude Include="DailyReport.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="MailSender.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReportBase.h" />
     <ClInclude Include="ReportManager.h" />
@@ -202,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DailyReport.cpp" />
+    <ClCompile Include="MailSender.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

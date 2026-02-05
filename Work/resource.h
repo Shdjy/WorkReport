@@ -26,13 +26,15 @@
 #define ID_MENUSETWEEK                  32785
 #define ID_MENUSETMONTH                 32786
 #define ID_MENUTODAY                    32787
+#define ID_MENUWEEK                     32788
+#define ID_MENUMONTH                    32789
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        131
-#define _APS_NEXT_COMMAND_VALUE         32788
+#define _APS_NEXT_COMMAND_VALUE         32790
 #define _APS_NEXT_CONTROL_VALUE         1005
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

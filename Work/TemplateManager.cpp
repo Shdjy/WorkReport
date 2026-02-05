@@ -61,67 +61,7 @@ ReportTemplate TemplateManager::GetTemplate() const
 	return m_template;
 }
 
-ReportTemplate TemplateManager::GetTodayTemplate()
-{
-	ReportTemplate temp = m_template;
-	DateInfo date = GetTodayDate();
 
-	ReplaceAll(temp.Title, "{DATE_CN}", date.cn);
-	ReplaceAll(temp.Body, "{DATE_DOT}", date.dot);
-
-	return temp;
-}
-
-DateInfo TemplateManager::GetTodayDate()
-{
-	time_t now = time(nullptr);
-	tm local{};
-	localtime_s(&local, &now);
-
-	DateInfo info;
-
-	char buf[32];
-
-	// ---- 中文日期：YYYY年M月D日（UTF-8 硬编码，避免乱码） ----
-	sprintf_s(buf, "%d", local.tm_year + 1900);
-	std::string cn = buf;
-
-	cn.append("\xE5\xB9\xB4"); // 年
-
-	sprintf_s(buf, "%d", local.tm_mon + 1);
-	cn.append(buf);
-	cn.append("\xE6\x9C\x88"); // 月
-
-	sprintf_s(buf, "%d", local.tm_mday);
-	cn.append(buf);
-	cn.append("\xE6\x97\xA5"); // 日
-
-	info.cn = cn;
-
-	// ---- 点分日期：YYYY.M.D ----
-	sprintf_s(
-		buf,
-		"%d.%d.%d",
-		local.tm_year + 1900,
-		local.tm_mon + 1,
-		local.tm_mday);
-
-	info.dot = buf;
-
-	return info;
-}
-
-
-
-void TemplateManager::ReplaceAll(std::string& text, const std::string& from, const std::string& to)
-{
-	size_t pos = 0;
-	while ((pos = text.find(from, pos)) != std::string::npos)
-	{
-		text.replace(pos, from.length(), to);
-		pos += to.length();
-	}
-}
 
 void TemplateManager::SetTemplate(const ReportTemplate& tpl)
 {

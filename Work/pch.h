@@ -14,13 +14,17 @@
 #include <regex>
 #include <curl/curl.h>
 #include <iostream>
+#include <memory.h>
 #include "LoggerMacros.h"
 #include "Logger.h"
 #include <fstream>
-#include <unordered_map>
 #include <string>
 #include "json.hpp"
 #include "TemplateManager.h"
+#include "MailSender.h"
+#include "DailyReport.h"
+#include "Work.h"
+
 
 
 using json = nlohmann::json;

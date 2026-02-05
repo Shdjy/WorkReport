@@ -24,6 +24,9 @@ public:
 public:
 	virtual BOOL InitInstance();
 
+	std::string GetExeFullPath();
+
+	static std::string m_appPath;
 // 实现
 
 	DECLARE_MESSAGE_MAP()

@@ -1,16 +1,15 @@
 #pragma once
 #include "ReportBase.h"
+
+#define  DAILYREPORTPATH "\\..\\Template\\DilyReport.json"
+
 class DailyReport :
     public ReportBase
 {
-	std::string GetPeriodKey() const override
-	{
-		return GetDateString();   // yyyy-MM-dd
-	}
+public:
+    DailyReport();
 
-	std::string GetStorageFileName() const override
-	{
-		return GetMonthString() + ".json"; // yyyy-MM.json
-	}
+    DateInfo GetDateInfo() override;
+    ReportTemplate GetReport() override;
 };
 

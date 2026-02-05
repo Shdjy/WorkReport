@@ -54,6 +54,9 @@
     <ClInclude Include="ReportManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MailSender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Work.cpp">
@@ -78,6 +81,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ReportManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MailSender.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

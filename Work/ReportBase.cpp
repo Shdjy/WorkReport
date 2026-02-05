@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "ReportBase.h"
 
+ReportBase::ReportBase()
+{
+	
+}
+
 void ReportBase::SetTitle(const std::string& title)
 {
 	m_title = title;
@@ -9,6 +14,16 @@ void ReportBase::SetTitle(const std::string& title)
 void ReportBase::SetContent(const std::string& content)
 {
 	m_content = content;
+}
+
+void ReportBase::ReplaceAll(std::string& text, const std::string& from, const std::string& to)
+{
+	size_t pos = 0;
+	while ((pos = text.find(from, pos)) != std::string::npos)
+	{
+		text.replace(pos, from.length(), to);
+		pos += to.length();
+	}
 }
 
 std::string ReportBase::GetTimeString()

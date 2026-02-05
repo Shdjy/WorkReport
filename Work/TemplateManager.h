@@ -22,7 +22,7 @@ public:
 	ReportTemplate GetTemplate() const;
 	ReportTemplate GetTodayTemplate();
 	DateInfo GetTodayDate();
-	void ReplaceAll(std::string& text, const std::string& from, const std::string& to);
+	
 
 private:
 	ReportTemplate m_template;
