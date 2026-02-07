@@ -40,9 +40,6 @@ public:
 
 private: 
 
-	void LoadTemplateManager();
-
-
 	CBrush m_bkBrush;
 	CMenu m_menu;
 
@@ -53,7 +50,6 @@ private:
 
 
 public:
-	afx_msg void OnBnClickedButton2();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnMenuToaday();
 	afx_msg void OnMenusetday();

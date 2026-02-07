@@ -11,5 +11,7 @@ public:
 
     DateInfo GetDateInfo() override;
     ReportTemplate GetReport() override;
+    ReportTemplate GetTemplate() override;
+    void SaveTemplate() override;
 };
 

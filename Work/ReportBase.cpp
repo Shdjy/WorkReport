@@ -16,6 +16,12 @@ void ReportBase::SetContent(const std::string& content)
 	m_content = content;
 }
 
+
+void ReportBase::SaveTemplate()
+{
+	m_templateManager.SetTemplate(m_reportTemplate);
+}
+
 void ReportBase::ReplaceAll(std::string& text, const std::string& from, const std::string& to)
 {
 	size_t pos = 0;

@@ -36,7 +36,6 @@ BEGIN_MESSAGE_MAP(CWorkDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CWorkDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &CWorkDlg::OnBnClickedButton2)
 	ON_WM_CTLCOLOR()
 	ON_COMMAND(ID_MENULOADAY, &CWorkDlg::OnMenuToaday)
 	ON_COMMAND(ID_MENUSETDAY, &CWorkDlg::OnMenusetday)
@@ -66,10 +65,9 @@ BOOL CWorkDlg::OnInitDialog()
 	m_bkBrush.CreateSolidBrush(RGB(255, 192, 203)); // 标准粉色
 
 	m_reportT = std::make_unique<DailyReport>();
-	//加载当日模板
-	OnMenuToaday();
-	//LoadTemplateManager();
 
+	OnMenutoday();//加载今日模板
+	
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -164,6 +162,7 @@ std::string CWorkDlg::CStringToString(const CString& str)
 
 CString CWorkDlg::StringToCString(const std::string& str)
 {
+	//return CString(str.c_str());
 	//if (str.empty())
 	//{
 	//	return CString();
@@ -232,31 +231,6 @@ CString CWorkDlg::StringToCString(const std::string& str)
 }
 
 
-void CWorkDlg::LoadTemplateManager()
-{
-	/*std::string path = CWorkApp::m_appPath + DILYREPORTPATH;
-	if (m_templateManager.Load(path))
-	{
-		m_reportTemplate = m_templateManager.GetTodayTemplate();
-		m_reportTitle = StringToCString(m_reportTemplate.Title);
-		m_reportBody = StringToCString(m_reportTemplate.Body);
-		UpdateData(FALSE);
-	}*/
-}
-
-void CWorkDlg::OnBnClickedButton2()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	//UpdateData(TRUE);
-	//m_reportTemplate.Title = CStringToString(m_reportTitle);
-	//m_reportTemplate.Body = CStringToString(m_reportBody);
-
-	//m_templateManager.SetTemplate(m_reportTemplate);
-	//std::string path = CWorkApp::m_appPath + DILYREPORTPATH;
-	//m_templateManager.Save(path);
-}
-
-//
 
 HBRUSH CWorkDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
@@ -285,12 +259,12 @@ HBRUSH CWorkDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 }
 
 
-void CWorkDlg::OnMenuToaday()
+void CWorkDlg::OnMenuToaday()//加载日报模板
 {
 	// TODO: 在此添加命令处理程序代码
+	m_reportT->GetTemplate();
 	if (m_reportT->m_isLoadSuccess)
 	{
-		m_reportT->GetReport();
 		m_reportTitle = StringToCString(m_reportT->m_reportTemplate.Title);
 		m_reportBody = StringToCString(m_reportT->m_reportTemplate.Body);
 		UpdateData(FALSE);
@@ -301,14 +275,23 @@ void CWorkDlg::OnMenuToaday()
 void CWorkDlg::OnMenusetday()
 {
 	// TODO: 在此添加命令处理程序代码
-	OnBnClickedButton2();
+	UpdateData(TRUE);
+	m_reportT->m_reportTemplate.Title = CStringToString(m_reportTitle);
+	m_reportT->m_reportTemplate.Body = CStringToString(m_reportBody);
+	m_reportT->SaveTemplate();
 }
 
 
-void CWorkDlg::OnMenutoday()
+void CWorkDlg::OnMenutoday()//加载今日模板
 {
 	// TODO: 在此添加命令处理程序代码
-	LoadTemplateManager();
+	if (m_reportT->m_isLoadSuccess)
+	{
+		m_reportT->GetReport();
+		m_reportTitle = StringToCString(m_reportT->m_reportTemplate.Title);
+		m_reportBody = StringToCString(m_reportT->m_reportTemplate.Body);
+		UpdateData(FALSE);
+	}
 }
 
 

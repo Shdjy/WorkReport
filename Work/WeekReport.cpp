@@ -1,12 +1,7 @@
 #include "pch.h"
-#include "DailyReport.h"
+#include "WeekReport.h"
 
-DailyReport::DailyReport()
-{
-	GetTemplate();
-}
-
-DateInfo DailyReport::GetDateInfo()
+DateInfo WeekReport::GetDateInfo()
 {
 	time_t now = time(nullptr);
 	tm local{};
@@ -45,32 +40,19 @@ DateInfo DailyReport::GetDateInfo()
 	return info;
 }
 
-ReportTemplate DailyReport::GetReport()
+ReportTemplate WeekReport::GetReport()
 {
-	DateInfo date = GetDateInfo();
-
-	ReplaceAll(m_reportTemplate.Title, "{DATE_CN}", date.cn);
-	ReplaceAll(m_reportTemplate.Body, "{DATE_DOT}", date.dot);
 
 	return m_reportTemplate;
 }
 
-ReportTemplate DailyReport::GetTemplate()
+ReportTemplate WeekReport::GetTemplate()
 {
-	m_isLoadSuccess = m_templateManager.Load(CWorkApp::m_appPath + DAILYREPORTPATH);
-	if (m_isLoadSuccess)
-	{
-		m_reportTemplate = m_templateManager.GetTemplate();
-	}
-	else
-	{
-		LOG_ERROR("日报模板加载异常");
-	}
+
 	return m_reportTemplate;
 }
 
-void DailyReport::SaveTemplate()
+void WeekReport::SaveTemplate()
 {
-	ReportBase::SaveTemplate();
-	m_templateManager.Save(CWorkApp::m_appPath + DAILYREPORTPATH);
+
 }

@@ -198,6 +198,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TemplateManager.h" />
+    <ClInclude Include="WeekReport.h" />
     <ClInclude Include="Work.h" />
     <ClInclude Include="WorkDlg.h" />
   </ItemGroup>
@@ -214,6 +215,7 @@
     <ClCompile Include="ReportManager.cpp" />
     <ClCompile Include="ReportStorage.cpp" />
     <ClCompile Include="TemplateManager.cpp" />
+    <ClCompile Include="WeekReport.cpp" />
     <ClCompile Include="Work.cpp" />
     <ClCompile Include="WorkDlg.cpp" />
   </ItemGroup>

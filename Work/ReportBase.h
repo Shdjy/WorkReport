@@ -13,6 +13,8 @@ public:
 
 	virtual DateInfo GetDateInfo() = 0;
 	virtual ReportTemplate GetReport() = 0;
+	virtual ReportTemplate GetTemplate() = 0;
+	virtual void SaveTemplate();
 
 	nlohmann::json ToJson() const
 	{
