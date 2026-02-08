@@ -187,6 +187,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Contact.h" />
     <ClInclude Include="DailyReport.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="json.hpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="WorkDlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Contact.cpp" />
     <ClCompile Include="DailyReport.cpp" />
     <ClCompile Include="MailSender.cpp" />
     <ClCompile Include="pch.cpp">

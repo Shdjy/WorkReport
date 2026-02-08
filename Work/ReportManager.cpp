@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "ReportManager.h"
 
-bool ReportManager::InitTemplate(const std::string& path)
-{
-	return m_templateMgr.Load(path);
-}
 
 bool ReportManager::SaveReport(const std::string& baseDir, ReportBase& report, const std::string& templateKey)
 {

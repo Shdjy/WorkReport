@@ -4,6 +4,7 @@
 class ReportStorage
 {
 public:
-	bool Save(const std::string& baseDir, const ReportBase& report);
+	bool Save(const std::string& baseDir, ReportBase& report);
+	//static bool Load();
 };
 

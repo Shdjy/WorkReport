@@ -1,17 +1,15 @@
 #pragma once
 #include "ReportBase.h"
 #include "ReportStorage.h"
-#include "TemplateManager.h"
 
 class ReportManager
 {
 public:
-	bool InitTemplate(const std::string& path);
-	
 	bool SaveReport(const std::string& baseDir, ReportBase& report, const std::string& templateKey);
 
+	std::unique_ptr<ReportBase> m_report;
 private:
-	TemplateManager m_templateMgr;
-	ReportStorage   m_storage;
+	ReportTemplate m_reportTemplate;
+	ReportStorage m_storage;
 };
 

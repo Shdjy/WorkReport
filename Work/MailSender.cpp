@@ -46,26 +46,31 @@ void MailSender::SetFrom(const std::string& from)
 	m_from = from;
 }
 
+//添加接收人
 void MailSender::AddTo(const std::vector<std::string>& toList)
 {
 	m_toList.insert(m_toList.end(), toList.begin(), toList.end());
 }
 
+//添加抄送人
 void MailSender::AddCc(const std::vector<std::string>& ccList)
 {
 	m_ccList.insert(m_ccList.end(), ccList.begin(), ccList.end());
 }
 
+//设置主题
 void MailSender::SetSubject(const std::string& subject)
 {
 	m_subject = subject;
 }
 
+//设置内容
 void MailSender::SetBody(const std::string& body)
 {
 	m_body = body;
 }
 
+//添加附件
 void MailSender::AddAttachment(const std::string& filePath)
 {
 	m_attachList.push_back(filePath);
@@ -167,6 +172,7 @@ bool MailSender::Send(std::string& errMsg)
 	if (res != CURLE_OK)
 	{
 		errMsg = curl_easy_strerror(res);
+		LOG_ERROR("发送邮件失败：" + errMsg);
 		return false;
 	}
 

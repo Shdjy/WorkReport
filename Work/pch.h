@@ -15,10 +15,12 @@
 #include <curl/curl.h>
 #include <iostream>
 #include <memory.h>
-#include "LoggerMacros.h"
-#include "Logger.h"
+#include <map>
 #include <fstream>
 #include <string>
+
+#include "LoggerMacros.h"
+#include "Logger.h"
 #include "json.hpp"
 #include "TemplateManager.h"
 #include "MailSender.h"

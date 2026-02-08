@@ -64,3 +64,9 @@ std::string ReportBase::GetMonthString()
 	oss << std::put_time(&tm, "%Y-%m");
 	return oss.str();
 }
+
+std::string ReportBase::GetStorageFilePath()
+{
+
+	return "";
+}

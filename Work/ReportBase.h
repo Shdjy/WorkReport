@@ -33,6 +33,8 @@ public:
 	static std::string GetMonthString();
 	static std::string GetWeekString();
 
+	std::string GetStorageFilePath();
+
 	MailSender m_sender;
 	TemplateManager m_templateManager;
 	bool m_isLoadSuccess;
